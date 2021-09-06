@@ -12,7 +12,7 @@ etc.
 4. Considerar definir diversas alertas (mínimo 2) que al superar un threshold
 pueda enviar un mensaje vía mensaje Whatsapp (Sugerencia API Twilio).
 
-## Ejemplo de Solucion: [Prometheus combinado con Grafana](https://tinyurl.com/demoPrometheus)
+[Ejemplo de Solucion: Prometheus combinado con Grafana](https://tinyurl.com/demoPrometheus)
 
 ## Diagrama de la solucion propuesta
 
@@ -43,6 +43,12 @@ pueda enviar un mensaje vía mensaje Whatsapp (Sugerencia API Twilio).
 
 Se debe actualizar las funciones de curl con el comando `sudo apt-get install php7.0-curl`.
 Los SMS solo se podran enviar a [Verified Caller IDs](https://www.twilio.com/console/phone-numbers/verified), podemos agregar algunos numeros, en este caso hice pruebas con mi numero personal, el que se ingresa al registrar.
+
+#### Codigo en send_sms.c
+
+Se necesita las siguientes librerias:
+* stdio.h, stdlib.h, unistd.h 
+* libcurl: `sudo apt-get install libcurl4-openssl-dev`
 
 ## Video del funcionamiento
 
