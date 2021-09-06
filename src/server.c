@@ -2,7 +2,7 @@
 #include <limits.h>
 #include <sys/wait.h>
 #include <pthread.h>
-#include "common.h"
+#include "include/common.h"
 #define MAX_FD 2
 #include <stdbool.h>
 
@@ -178,14 +178,8 @@ int main(int argc, char **argv)
 		haddrp = inet_ntoa(clientaddr.sin_addr);
 
 		printf("server conectado a %s (%s)\n", hp->h_name, haddrp);
-		//atender_cliente(connfd);
 		pthread_create(&tid, NULL, thread, connfd);
-		//printf("server desconectando a %s (%s)\n", hp->h_name, haddrp);
-		//close(connfd);
-		//exit(0);
 		
-
-		//close(connfd);
 	}
 }
 
@@ -207,7 +201,38 @@ void atender_cliente(int connfd)
 		//Detecta "CHAO" y se desconecta del cliente
 		if(strcmp(buf, "CHAO\n") == 0){
 			write(connfd, "BYE\n", 5);
-			return;
+			int pid_current;
+			pid_current = fork();
+			if (pid_current < 0) { 
+				fprintf(stderr, "Fork Failed");
+			
+			} else if (pid == 0) { 
+			// child process
+			/*
+/c_sms -a "ACee28fea35ad452b3f809ffd1cb49ede6" 
+-s "9a9715333490c1eea7136d17b903a789" 
+-t "+593989884022" -f "+14158133502" 
+-m "Hello, BOSS"
+			*/
+				char* command = "./c_sms";
+    				char* argument_list[] = {
+    				"./c_sms",
+    				"-a","ACee28fea35ad452b3f809ffd1cb49ede6",
+    				"-s","9a9715333490c1eea7136d17b903a789",
+    				"-t","+593989884022","-f","+14158133502",
+    				"-m","Hello, el cliente se ha desconectado!!!",
+    				NULL};
+				if(execvp(command,argument_list) < 0){
+					fprintf(stderr, "ERROR>> Al enviar la notificacion!!!\n");
+					exit(1);
+				}
+
+   			} else { 
+   			// parent process
+		        	wait(NULL);// parent will wait for the child to complete
+       	
+         			printf("Child Complete \n");
+   			}
 		}
 
 		//Remueve el salto de linea antes de extraer los tokens

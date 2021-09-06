@@ -1,36 +1,23 @@
-#include <getopt.h>
+#ifndef COMMON_H
+#define COMMON_H
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <string.h>
-#include <limits.h>
-#include <syslog.h>
-#include <signal.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <ctype.h>
-#include <errno.h>
 #include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <errno.h>
 #include <sys/stat.h>
-#include <sys/wait.h>
-#include <fcntl.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <linux/kernel.h>
+#include <sys/sysinfo.h>
 
-//#include "../include/sha256.h"
-//#include "../include/uECC.h"
-//#include "../include/blowfish.h"
-//#include "../include/csapp.h"
+#define MAXLINE 1024
 
-
-#define	MAX_PUBLIC_KEY 64
-#define	MAX_PRIVATE_KEY	 21
-#define	MAX_SECRET 32 
-#define	MAXLINE	 8192  /* Max text line length */
-
- 
- ///////////////////////////////////////
+///////////////////////////////////////
 /* Funciones de gestión de conexión */
 
 /**
@@ -61,3 +48,5 @@ int open_clientfd(char *hostname, char *port);
  * @param connfd Socket file descriptor.
  */
 void connection_error(int connfd);
+
+#endif /* COMMON_H */
